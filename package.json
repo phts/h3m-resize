@@ -1,0 +1,23 @@
+{
+  "name": "homm3-resize-map",
+  "description": "",
+  "private": true,
+  "type": "module",
+  "homepage": "https://github.com/phts/homm3-resize-map#readme",
+  "author": "Phil Tsaryk",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phts/homm3-resize-map.git"
+  },
+  "scripts": {
+    "lint": "eslint --ext mjs .",
+    "start": "node app/index.mjs"
+  },
+  "devDependencies": {
+    "@phts/eslint-config": "^2.2.0",
+    "@phts/prettier-config": "^1.2.0",
+    "eslint": "^8.57.1",
+    "prettier": "^3.8.2"
+  }
+}

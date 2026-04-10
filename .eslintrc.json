@@ -1,0 +1,14 @@
+{
+  "extends": ["@phts"],
+  "overrides": [
+    {
+      "files": "*.mjs",
+      "extends": ["@phts/eslint-config/rules/module"],
+      "env": {"node": true}
+    },
+    {
+      "files": "*",
+      "extends": ["@phts/eslint-config/rules/prettier"]
+    }
+  ]
+}
