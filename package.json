@@ -1,14 +1,14 @@
 {
-  "name": "homm3-resize-map",
+  "name": "h3m-resize",
   "description": "",
   "private": true,
   "type": "module",
-  "homepage": "https://github.com/phts/homm3-resize-map#readme",
+  "homepage": "https://github.com/phts/h3m-resize#readme",
   "author": "Phil Tsaryk",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/phts/homm3-resize-map.git"
+    "url": "git+https://github.com/phts/h3m-resize.git"
   },
   "scripts": {
     "lint": "eslint --ext mjs .",
