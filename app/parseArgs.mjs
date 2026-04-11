@@ -1,9 +1,13 @@
+import {SIZE_LABELS} from './utils/h3m.mjs'
+
+const SUPPORTED_ARGS = ['src-file', 'out-file', 'new-size']
+const SUPPORTED_SIZES = Object.values(SIZE_LABELS)
+
 export function parseArgs() {
   const args = {}
-  const supportedArgs = ['src-file', 'tmpl-file', 'out-file', 'src-file-tiles-offset']
 
   process.argv.forEach((x) => {
-    for (const arg of supportedArgs) {
+    for (const arg of SUPPORTED_ARGS) {
       const [key, value] = x.split('=', 2)
       if (key === `--${arg}`) {
         args[arg] = value
@@ -11,13 +15,12 @@ export function parseArgs() {
     }
   })
 
-  if (Object.keys(args).length !== supportedArgs.length) {
+  if (Object.keys(args).length !== SUPPORTED_ARGS.length) {
     throw new Error('Wrong number of arguments')
   }
 
-  args['src-file-tiles-offset'] = parseInt(args['src-file-tiles-offset'], 16)
-  if (!args['src-file-tiles-offset']) {
-    throw new Error('Wrong format of --src-file-tiles-offset')
+  if (!SUPPORTED_SIZES.includes(args['new-size'])) {
+    throw new Error('Wrong value of --new-size')
   }
 
   return args
