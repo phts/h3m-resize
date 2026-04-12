@@ -3,11 +3,11 @@
 ## Requirements
 
 - Node.js v22 or higher
-- `gzip` executable in global `PATH`
+- `gzip` executable available in global `PATH`
 
 ## Limitations
 
-- Only HotA maps are supported
+- Only HotA maps are supported (tested on v1.8.0)
 
 ## Usage
 
@@ -31,6 +31,12 @@ And then to execute the script:
 ```sh
 npm start -- --src-file=/path/to/source.h3m --out-file=/path/to/out.h3m --new-size=[S|M|L|XL|H|XH|G]
 ```
+
+After successful conversion open newly created map in the map editor and replace terrain in the left top corner back as it was in your original file.
+
+:warning: When decreasing size from bigger to smaller all objects which were placed on the cropped segments will be still
+presented in the map structure and may cause unpredictable behavior when later adding more objects.
+In this case recommended before executing the script manually delete/move all objects out from the segments which are going to be cropped.
 
 ## References
 

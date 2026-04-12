@@ -30,7 +30,7 @@ export function getType(buffer) {
     0x1c: 'SoD',
     0x20: 'HotA',
   }
-  return TYPES[buffer[0x0]]
+  return TYPES[buffer[0x0]] || `Unknown (${buffer[0x0].toString(16).padStart(8, '0')})`
 }
 
 export function hasUnderground(buffer) {
