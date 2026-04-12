@@ -12,8 +12,10 @@ export function app(args) {
 
   const srcSize = getSize(srcFileBuffer)
   const newSize = getSizeByLabel(args['new-size'])
+  const hasUground = hasUnderground(srcFileBuffer)
 
   console.info(`Source map size: ${getSizeLabel(srcFileBuffer)}`)
+  console.info(`Underground: ${hasUground ? 'yes' : 'no'}`)
   console.info(`${srcSize < newSize ? 'Extending' : 'Decreasing'} to: ${args['new-size']}`)
 
   // Find first land segment
@@ -50,7 +52,7 @@ export function app(args) {
 
   const overgroundSegmentsBuffer = allocPattern(
     newSize * newSize,
-    Buffer.from([0x08, 0x15, 0x00, 0x00, 0x00, 0x00, 0x00])
+    Buffer.from([0x09, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00])
   )
   for (let line = 0; line < srcSize; line++) {
     srcFileBuffer.copy(
@@ -61,31 +63,33 @@ export function app(args) {
     )
   }
 
-  const undergroundSegmentsBuffer = allocPattern(
-    newSize * newSize,
-    Buffer.from([0x09, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00])
-  )
-  for (let line = 0; line < srcSize; line++) {
-    srcFileBuffer.copy(
-      undergroundSegmentsBuffer,
-      line * newSize * 7,
-      srcFileLandSegmentsOffset + srcSize * srcSize * 7 + line * srcSize * 7,
-      srcFileLandSegmentsOffset + srcSize * srcSize * 7 + line * srcSize * 7 + srcSize * 7
-    )
+  let undergroundSegmentsBuffer
+  if (hasUground) {
+    undergroundSegmentsBuffer = allocPattern(newSize * newSize, Buffer.from([0x09, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00]))
+    for (let line = 0; line < srcSize; line++) {
+      srcFileBuffer.copy(
+        undergroundSegmentsBuffer,
+        line * newSize * 7,
+        srcFileLandSegmentsOffset + srcSize * srcSize * 7 + line * srcSize * 7,
+        srcFileLandSegmentsOffset + srcSize * srcSize * 7 + line * srcSize * 7 + srcSize * 7
+      )
+    }
   }
 
-  const srcFileLandSegmentsEndOffset = srcFileLandSegmentsOffset + srcSize * srcSize * 7 + srcSize * srcSize * 7
+  const srcFileLandSegmentsEndOffset =
+    srcFileLandSegmentsOffset + srcSize * srcSize * 7 + (hasUground ? srcSize * srcSize * 7 : 0)
   const targetBuffer = Buffer.concat([
     srcFileBuffer.subarray(0, 0x26),
     Buffer.from([newSize]),
     srcFileBuffer.subarray(0x26 + 1, srcFileLandSegmentsOffset),
     overgroundSegmentsBuffer,
-    undergroundSegmentsBuffer,
+    hasUground ? undergroundSegmentsBuffer : Buffer.from([]),
     srcFileBuffer.subarray(srcFileLandSegmentsEndOffset),
   ])
 
   const uncompressedFile = args['out-file'] + '.unpacked'
   writeFileSync(uncompressedFile, targetBuffer, {encoding: 'hex'})
-  execSync(`gzip --force ${uncompressedFile}`)
+  execSync(`gzip --force --keep ${uncompressedFile}`)
   execSync(`mv ${uncompressedFile}.gz ${args['out-file']}`)
+  console.info('Done!')
 }
