@@ -16,10 +16,6 @@ export function app(args) {
   console.info(`Source map size: ${getSizeLabel(srcFileBuffer)}`)
   console.info(`${srcSize < newSize ? 'Extending' : 'Decreasing'} to: ${args['new-size']}`)
 
-  if (srcSize !== 72 && newSize !== 108 && !hasUnderground(srcFileBuffer)) {
-    throw new Error('Currently supported very limited cases')
-  }
-
   // Find first land segment
   // Sequence from README
   // 03 ?? 04 (0B|0C) 01 0F ?? ; 03 ?? 04 (0B|0C) 01 (0C|0D) ?? ; 07 ?? 04 (0B|0C) 01 (0C|0D) ??
