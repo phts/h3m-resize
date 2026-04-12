@@ -54,7 +54,7 @@ export function app(args) {
 
   const overgroundSegmentsBuffer = allocPattern(
     newSize * newSize,
-    Buffer.from([0x08, 0x15, 0x00, 0x00, 0x00, 0x00, 0x00])
+    Buffer.from([0x09, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00])
   )
   for (let line = 0; line < srcSize; line++) {
     srcFileBuffer.copy(
