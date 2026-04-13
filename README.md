@@ -21,8 +21,8 @@ to be able to properly find the offset in the file structure with the first segm
 1. Place rectangle of Grass from the top left corner (coordinates `x=0;y=0`) to at least `x=5;y=2`
 2. Place two segments of Snow at `x=0;y=0` and `x=1;y=0` (enough single click on `x=1;y=0`)
 3. Place two segments of Lava at `x=2;y=0` and `x=3;y=0` (enough single click on `x=3;y=0`)
-4. Place Lava river from `x=0;y=0` to `x=4;y=0`
-5. Place Dirt road from `x=0;y=0` to `x=4;y=0`
+4. Place Lava river from `x=0;y=0` to `x=3;y=0`
+5. Place Dirt road from `x=0;y=0` to `x=3;y=0`
 
 It has to look like:
 
