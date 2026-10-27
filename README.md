@@ -36,9 +36,16 @@ npm start -- --src-file=/path/to/source.h3m --out-file=/path/to/out.h3m --new-si
 
 After successful conversion open newly created map in the map editor and replace terrain in the left top corner back as it was in your original file.
 
-:warning: When decreasing size from bigger to smaller all objects which were placed on the cropped segments will be still
-presented in the map structure and may cause unpredictable behavior when later adding more objects.
-In this case recommended before executing the script manually delete/move all objects out from the segments which are going to be cropped.
+### Troubleshooting
+
+1. When increasing size from smaller to bigger, then new black tiles will be added to the left and bottom side without proper transition tiles.
+   In some cases this may cause map editor crash. In this case in your original map file draw the full line with black tiles at the very
+   left and bottom border with thickness 1 or 2, at both foreground and underground (if you have it). This will make proper transition from
+   water/ground/underground terrain into black terrain and new black tiles will be added safely.
+
+2. When decreasing size from bigger to smaller all objects which were placed on the cropped segments will be still
+   presented in the map structure and may cause unpredictable behavior when later adding more objects.
+   In this case recommended before executing the script manually delete/move all objects out from the segments which are going to be cropped.
 
 ## References
 
